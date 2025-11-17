@@ -1,0 +1,18 @@
+# Arduino build outputs
+*.o
+*.elf
+*.hex
+*.bin
+*.map
+
+# IDE files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build directories
+build/
+dist/
