@@ -21,7 +21,11 @@ AlashUltrasonic::AlashUltrasonic(uint8_t rxPin, uint8_t txPin, ConnectionType ty
   _txPin = txPin;
   _connectionType = type;
   _lastReadTime = 0;
+#if defined(ARDUINO_ARCH_ESP32)
+  _serial = new HardwareSerial(1);
+#else
   _serial = new SoftwareSerial(_rxPin, _txPin);
+#endif
 }
 
 // Конструктор для 1-Wire
@@ -38,7 +42,11 @@ void AlashUltrasonic::begin() {
       Wire.begin();
       break;
     case UART_MODE:
+#if defined(ARDUINO_ARCH_ESP32)
+      _serial->begin(9600, SERIAL_8N1, _rxPin, _txPin);
+#else
       _serial->begin(9600);
+#endif
       break;
     case ONEWIRE_MODE:
       pinMode(_oneWirePin, OUTPUT);

@@ -3,7 +3,14 @@
 
 #include <Arduino.h>
 #include <Wire.h>
-#include <SoftwareSerial.h>
+#if defined(ARDUINO_ARCH_ESP32)
+  // На ESP32 нет SoftwareSerial: для UART-режима используется аппаратный порт Serial1.
+  #include <HardwareSerial.h>
+  typedef HardwareSerial AlashUartPort;
+#else
+  #include <SoftwareSerial.h>
+  typedef SoftwareSerial AlashUartPort;
+#endif
 
 // Enum для типов подключения
 enum ConnectionType {
@@ -36,7 +43,7 @@ class AlashUltrasonic {
     uint8_t _i2cAddress;
     
     // Переменные для UART
-    SoftwareSerial* _serial;
+    AlashUartPort* _serial;
     uint8_t _rxPin;
     uint8_t _txPin;
     

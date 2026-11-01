@@ -6,7 +6,11 @@ const uint8_t ECHO_PIN = 8;     // GPIO echo
 const uint8_t I2C_ADDRESS = 0x57; // I2C адрес
 const uint8_t RX_PIN = 3;       // UART RX
 const uint8_t TX_PIN = 2;       // UART TX
-const uint8_t ONE_WIRE_PIN = A5; // 1-Wire пин
+#if defined(ESP32) || defined(ESP8266)
+const uint8_t ONE_WIRE_PIN = 5;   // на ESP нет пина A5: используем GPIO
+#else
+const uint8_t ONE_WIRE_PIN = A5;
+#endif // 1-Wire пин
 
 // Создание объектов для разных типов подключения
 AlashUltrasonic sensorGPIO(TRIGGER_PIN, ECHO_PIN);           // GPIO режим

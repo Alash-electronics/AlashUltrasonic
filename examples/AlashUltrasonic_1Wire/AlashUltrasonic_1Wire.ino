@@ -1,7 +1,11 @@
 #include <AlashUltrasonic.h>
 
 // Параметры для 1-Wire
+#if defined(ESP32) || defined(ESP8266)
+const uint8_t ONE_WIRE_PIN = 5;   // на ESP нет пина A5: используем GPIO
+#else
 const uint8_t ONE_WIRE_PIN = A5;
+#endif
 
 AlashUltrasonic sensorOneWire(ONE_WIRE_PIN, ONEWIRE_MODE);
 
